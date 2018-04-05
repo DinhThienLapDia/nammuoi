@@ -18,8 +18,8 @@ from telethon import utils
 
 from telethon.tl.functions.channels import InviteToChannelRequest
 
-from flask import Flask, render_template, request
-template_dir = 'C:\\apps'
+from flask import Flask, render_template, request, send_from_directory
+template_dir = '/home/namnp/projects/nammuoi'
 app = Flask(__name__, template_folder=template_dir)
 
 
@@ -30,53 +30,59 @@ def index():
 @app.route('/result',methods = ['POST', 'GET'])
 def result():
    if request.method == 'POST':
-      apikey = request.form.get('apikey')
-      accesshash = request.form.get('accesshash')
-      phonenumber = request.form.get('phonenumber')
-      channelname = request.form.get('channelname')
+      try:
+          apikey = request.form.get('apikey')
+          accesshash = request.form.get('accesshash')
+          phonenumber = request.form.get('phonenumber')
+          channelname = request.form.get('channelname')
 
-      client = TelegramClient(phonenumber, apikey, accesshash)
+          client = TelegramClient(phonenumber, apikey, accesshash)
 
 
 
       
 
-      client.session.report_errors = False
-      client.connect()
+          client.session.report_errors = False
+          client.connect()
 
-      if not client.is_user_authorized():
+          if not client.is_user_authorized():
          #client.send_code_request(phonenumber)
          #client.sign_in(phonenumber, input('Enter the code: '))
-         return render_template("codeinput.html")
-         
-      members = getUserNames(client,channelname)
+             return render_template("codeinput.html")
+          channel_entity = client.get_entity(channelname)
+          members = client.get_participants(channel_entity)
       
-      return render_template("result.html",members = members)
-
+          return render_template("result.html",members = members)
+      except Exception as e:
+          return render_template("error.html")
 @app.route('/codeinputresult',methods = ['POST', 'GET'])
 def codeinputresult():
    if request.method == 'POST':
-      apikey = request.form.get('apikey')
-      accesshash = request.form.get('accesshash')
-      phonenumber = request.form.get('phonenumber')
-      channelname = request.form.get('channelname')
-      code = request.form.get('code')
+      try:
+          apikey = request.form.get('apikey')
+          accesshash = request.form.get('accesshash')
+          phonenumber = request.form.get('phonenumber')
+          channelname = request.form.get('channelname')
+          code = request.form.get('code')
 
-      client = TelegramClient(phonenumber, apikey, accesshash)
+          client = TelegramClient(phonenumber, apikey, accesshash)
 
 
 
       
 
-      client.session.report_errors = False
-      client.connect()
+          client.session.report_errors = False
+          client.connect()
       
-      client.send_code_request(phonenumber)
-      client.sign_in(phone=phonenumber, code=code)
+          client.send_code_request(phonenumber)
+          client.sign_in(phone=phonenumber, code=code)
          
-      members = getUserNames(client,channelname)
+          channel_entity = client.get_entity(channelname)
+          members = client.get_participants(channel_entity)
       
-      return render_template("result.html",members = members)
+          return render_template("result.html",members = members)
+      except Exception as e:
+          return render_template("error.html")
 
 def getUserNames(client,channel):
     print('2:')
@@ -95,6 +101,9 @@ def getUserNames(client,channel):
     members = client.get_participants(channel_entity)
     #client(InviteToChannelRequest(channel_entity,members))
     return members
+@app.route('/<path:path>')
+def send_js(path):
+    return send_from_directory('',path)
 
 if __name__ == '__main__':
-   app.run(debug = True)
+   app.run(debug = False)
