@@ -16,11 +16,17 @@ from telethon.tl.types import InputUser
 
 from telethon import utils
 
+import StringIO
+import csv
+from flask import make_response
+
 from telethon.tl.functions.channels import InviteToChannelRequest
 
 from flask import Flask, render_template, request, send_from_directory
 template_dir = '/root/nammuoi'
 app = Flask(__name__, template_folder=template_dir)
+
+resultlist = []
 
 
 @app.route('/')
@@ -84,10 +90,26 @@ def codeinputresult():
          
           channel_entity = client.get_entity(channelname)
           members = client.get_participants(channel_entity)
+
+          for member in members:
+            resultlist.append(dir(member))
       
           return render_template("result.html",members = members)
       except Exception as e:
           return render_template("error.html")
+
+
+
+@app.route('/exportcsv')
+def post(self):
+    si = StringIO.StringIO()
+    cw = csv.writer(si)
+    resultlist = str(re.sub('\[|\]','',str(resultlist)))
+    cw.writerows(resultlist)
+    output = make_response(si.getvalue())
+    output.headers["Content-Disposition"] = "attachment; filename=export.csv"
+    output.headers["Content-type"] = "text/csv"
+    return output
 
 def getUserNames(client,channel):
     print('2:')
