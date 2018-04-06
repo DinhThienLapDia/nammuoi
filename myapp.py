@@ -19,7 +19,7 @@ from telethon import utils
 from telethon.tl.functions.channels import InviteToChannelRequest
 
 from flask import Flask, render_template, request, send_from_directory
-template_dir = 'C:\\Users\\user\\projects\\nammuoi'
+template_dir = '/root/nammuoi'
 app = Flask(__name__, template_folder=template_dir)
 
 
