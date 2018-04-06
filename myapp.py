@@ -57,6 +57,7 @@ def result():
           print(members)
           return render_template("result.html",members = members)
       except Exception as e:
+          print(e)
           return render_template("error.html")
 @app.route('/codeinputresult',methods = ['POST', 'GET'])
 def codeinputresult():
