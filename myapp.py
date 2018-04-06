@@ -19,7 +19,7 @@ from telethon import utils
 from telethon.tl.functions.channels import InviteToChannelRequest
 
 from flask import Flask, render_template, request, send_from_directory
-template_dir = '/home/namnp/projects/nammuoi'
+template_dir = 'C:\\Users\\user\\projects\\nammuoi'
 app = Flask(__name__, template_folder=template_dir)
 
 
@@ -48,10 +48,13 @@ def result():
           if not client.is_user_authorized():
          #client.send_code_request(phonenumber)
          #client.sign_in(phonenumber, input('Enter the code: '))
+             client.send_code_request(phonenumber)
+             print("sent code")
              return render_template("codeinput.html")
           channel_entity = client.get_entity(channelname)
           members = client.get_participants(channel_entity)
-      
+          printmemberattr(members)
+          print(members)
           return render_template("result.html",members = members)
       except Exception as e:
           return render_template("error.html")
@@ -73,8 +76,9 @@ def codeinputresult():
 
           client.session.report_errors = False
           client.connect()
-      
+          
           client.send_code_request(phonenumber)
+            
           client.sign_in(phone=phonenumber, code=code)
          
           channel_entity = client.get_entity(channelname)
@@ -105,5 +109,11 @@ def getUserNames(client,channel):
 def send_js(path):
     return send_from_directory('',path)
 
+def printmemberattr(members):
+  result = []
+  for member in members:
+      result  = dir(member)
+  print(result)
+
 if __name__ == '__main__':
-   app.run(debug = False)
+   app.run(debug = True)
