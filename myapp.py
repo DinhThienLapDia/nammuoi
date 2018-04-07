@@ -148,8 +148,8 @@ def exportcsv():
     output = make_response(si.getvalue())
     output.headers["Content-Disposition"] = "attachment; filename=export.csv"
     output.headers["Content-type"] = "text/csv"
-    listtoexportcsv = [["userid","username","phonenumber"]]
-    return output
+
+    return output, listtoexportcsv = [["userid","username","phonenumber"]]
 
 def getUserNames(client,channel):
     print('2:')
