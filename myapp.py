@@ -36,7 +36,7 @@ app = Flask(__name__, template_folder=template_dir)
 resultlist = []
 inputdict = {'apikey':'','accesshash':'','phonenumber':'','channelname':'','channeltoadd':''}
 file_content = []
-listtoexportcsv = []
+listtoexportcsv = [["userid","username","phonenumber"]]
 
 api_id = 268912
 api_hash = '61d882470fd08f66ea5ea10db7d9723b'
@@ -148,6 +148,7 @@ def exportcsv():
     output = make_response(si.getvalue())
     output.headers["Content-Disposition"] = "attachment; filename=export.csv"
     output.headers["Content-type"] = "text/csv"
+    listtoexportcsv = [["userid","username","phonenumber"]]
     return output
 
 def getUserNames(client,channel):
