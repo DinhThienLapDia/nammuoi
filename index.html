@@ -4,18 +4,35 @@
         <title>Chương trình lấy danh sách users Telegram Channel </title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <link href="http://ftocafe.com:5000/css/style.css" rel="stylesheet" type="text/css" media="all" />
+        <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+        <link rel="stylesheet" type="text/css" href="css/demo.css" />
+        <link rel="stylesheet" type="text/css" href="css/component.css" />
 	</head>
 <div class="form-style-6">
 <h1>Điền vào thông tin để lấy danh sách users telegram (Hướng dẫn sử dụng <a href="/images/h.png">ở đây</a> ) </h1>
-<form action = "http://ftocafe.com:5000/result" method = "POST">
+<form align="center"  action = "http://ftocafe.com:5000/result" method = "POST">
 <input type="text" name="apikey" placeholder="API key telegram của bạn - nhập thử 268912 để test " />
 <input type="text" name="accesshash" placeholder="API hash nhập thử 61d882470fd08f66ea5ea10db7d9723b để test" />
 <input type="text" name="phonenumber" placeholder="Số điện thoại của bạn - nhập thử +84902231633 để test" />
 <textarea name="channelname" placeholder="Tên-id channel (nhập thử namnguyenvn để test)"></textarea>
 <input type="submit" value="Thực hiện chương trình" />
+<div class="container">
+            <header class="codrops-header">
+                <h2>Nhập File dữ liệu</h2>
+                <p>Gửi lên file text danh sách các username telegram để: <strong><a>tự động add tất cả vào channel telegram của bạn</a></strong></p>
+            </header>
+                <div class="box" align="center">
+                    <input type="text" name="channeltoadd" placeholder="id channel telegram mà bạn muốn thêm users " />
+                    <input type="file" style="visibility:hidden;" name="file-1[]" id="file-1" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple />
+                    <label for="file-1" text-align:center><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>Chọn một file&hellip;</span></label>
+                    <input type="submit" value="Tải và thêm users" />
+                </div>
+</div>
+
 </form>
 </div>
-<p class="copy_right">&#169; 2018 @Đây là bản quyền của FTOCAFE<a href="http://w3layouts.com" target="_blank">&nbsp;w3layouts</a> </p>
+<script src="js/custom-file-input.js"></script>
+<p class="copy_right" align="center">&#169; 2018 @Đây là bản quyền của FTOCAFE<a href="http://w3layouts.com" target="_blank">&nbsp;w3layouts</a> </p>
 <style type="text/css">
 .form-style-6{
     font: 95% Arial, Helvetica, sans-serif;
@@ -92,6 +109,83 @@
 }
 .form-style-6 input[type="submit"]:hover,
 .form-style-6 input[type="button"]:hover{
+    background: #2EBC99;
+}
+.content{
+    font: 95% Arial, Helvetica, sans-serif;
+    max-width: 400px;
+    margin: 10px auto;
+    padding: 16px;
+    background: #F7F7F7;
+}
+.content h1{
+    background: #43D1AF;
+    padding: 20px 0;
+    font-size: 140%;
+    font-weight: 300
+;    text-align: center;
+    color: #fff;
+    margin: -16px -16px 16px -16px;
+}
+.content input[type="text"],
+.content input[type="date"],
+.content input[type="datetime"],
+.content input[type="email"],
+.content input[type="number"],
+.content input[type="search"],
+.content input[type="time"],
+.content input[type="url"],
+.content textarea,
+.content select 
+{
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+    outline: none;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 100%;
+    background: #fff;
+    margin-bottom: 4%;
+    border: 1px solid #ccc;
+    padding: 3%;
+    color: #555;
+    font: 95% Arial, Helvetica, sans-serif;
+}
+.content input[type="text"]:focus,
+.content input[type="date"]:focus,
+.content input[type="datetime"]:focus,
+.content input[type="email"]:focus,
+.content input[type="number"]:focus,
+.content input[type="search"]:focus,
+.content input[type="time"]:focus,
+.content input[type="url"]:focus,
+.content textarea:focus,
+.content select:focus
+{
+    box-shadow: 0 0 5px #43D1AF;
+    padding: 3%;
+    border: 1px solid #43D1AF;
+}
+
+.content input[type="submit"],
+.content input[type="button"]{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 100%;
+    padding: 3%;
+    background: #43D1AF;
+    border-bottom: 2px solid #30C29E;
+    border-top-style: none;
+    border-right-style: none;
+    border-left-style: none;    
+    color: #fff;
+}
+.content input[type="submit"]:hover,
+.content input[type="button"]:hover{
     background: #2EBC99;
 }
 </style>
