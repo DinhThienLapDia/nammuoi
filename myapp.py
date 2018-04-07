@@ -174,7 +174,7 @@ def send_js(path):
 def addUserFromFileToChannel(input_file_content,client, channeltoinvite):
   channeltoinvite = client.get_entity(channeltoinvite)
   for x in input_file_content:
-client.get_entity(x)
+    client.get_entity(x)
     client.invoke(get_input_peer(channeltoinvite),[get_input_peer(client.get_entity(x))])
     time.sleep(5)
 
