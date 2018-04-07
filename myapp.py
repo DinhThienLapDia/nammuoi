@@ -187,8 +187,12 @@ def adduserscodeinputresult():
 
 def addUserFromFileToChannel(input_file_content,client, channeltoinvite):
   channeltoinvite = client.get_entity(channeltoinvite)
+  print("get channel to invite success")
+  print(input_file_content)
   for x in input_file_content:
+    print(x)
     client.get_entity(x)
+    print("get username to invite success")
     client.invoke(get_input_peer(channeltoinvite),[get_input_peer(client.get_entity(x))])
     time.sleep(5)
 
