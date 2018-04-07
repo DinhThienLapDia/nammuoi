@@ -84,6 +84,7 @@ def result():
             printmemberattr(members)
             print(members)
             for member in members:
+              listtoexportcsv = [["userid","username","phonenumber"]]
               listtoexportcsv.append([member.id,member.username,member.phone])
             return render_template("result.html",members = members)
           else:
@@ -149,7 +150,7 @@ def exportcsv():
     output.headers["Content-Disposition"] = "attachment; filename=export.csv"
     output.headers["Content-type"] = "text/csv"
 
-    return output, listtoexportcsv = [["userid","username","phonenumber"]]
+    return output
 
 def getUserNames(client,channel):
     print('2:')
