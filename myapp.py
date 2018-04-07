@@ -15,7 +15,7 @@ from telethon.tl.types import InputUserSelf
 from telethon.tl.types import InputUser
 
 from telethon import utils
-from telethon.tl.functions import
+from telethon.tl.functions import *
 
 from io import StringIO
 import csv
