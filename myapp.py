@@ -69,6 +69,7 @@ def result():
           client.connect()
           
           if 'file' not in request.files:
+            print("No file to upload")
             if not client.is_user_authorized():
          #client.send_code_request(phonenumber)
          #client.sign_in(phonenumber, input('Enter the code: '))
