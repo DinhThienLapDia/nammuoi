@@ -36,6 +36,7 @@ app = Flask(__name__, template_folder=template_dir)
 resultlist = []
 inputdict = {'apikey':'','accesshash':'','phonenumber':'','channelname':'','channeltoadd':''}
 file_content = []
+listtoexportcsv = []
 
 api_id = 268912
 api_hash = '61d882470fd08f66ea5ea10db7d9723b'
@@ -82,6 +83,8 @@ def result():
             members = client.get_participants(channel_entity)
             printmemberattr(members)
             print(members)
+            for member in members:
+              listtoexportcsv.append([member.id,member.username,member.phone])
             return render_template("result.html",members = members)
           else:
             print("upload file users and add to telegram channel")
@@ -141,8 +144,7 @@ def codeinputresult():
 def post(self):
     si = StringIO.StringIO()
     cw = csv.writer(si)
-    resultlist = str(re.sub('\[|\]','',str(resultlist)))
-    cw.writerows(resultlist)
+    cw.writerows(listtoexportcsv)
     output = make_response(si.getvalue())
     output.headers["Content-Disposition"] = "attachment; filename=export.csv"
     output.headers["Content-type"] = "text/csv"
