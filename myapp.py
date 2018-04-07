@@ -35,6 +35,13 @@ resultlist = []
 inputdict = {'apikey':'','accesshash':'','phonenumber':'','channelname':'','channeltoadd':''}
 file_content = []
 
+api_id = 268912
+api_hash = '61d882470fd08f66ea5ea10db7d9723b'
+
+phone_number = '+84902231633'
+
+client = TelegramClient(phone_number, api_id, api_hash)
+
 
 @app.route('/')
 def index():
@@ -60,13 +67,7 @@ def result():
 
           client.session.report_errors = False
           client.connect()
-
-          if not client.is_user_authorized():
-         #client.send_code_request(phonenumber)
-         #client.sign_in(phonenumber, input('Enter the code: '))
-              client.send_code_request(phonenumber)
-              print("sent code")
-              return render_template("codeinput.html")
+          
           if 'file' not in request.files:
             if not client.is_user_authorized():
          #client.send_code_request(phonenumber)
@@ -82,6 +83,7 @@ def result():
           else:
             print("upload file users and add to telegram channel")
             channeltoadd = request.form.get('channeltoadd')
+            inputdict['channeltoadd'] = channeltoadd
             if channeltoadd == "":
               print("không nhập thông tin channel")
               return render_template("error.html")
@@ -92,15 +94,22 @@ def result():
 
               # os.path.join is used so that paths work in every operating system
               file.save(os.path.join("/root/nammuoi",filename))
-
-        # You should use os.path.join here too.
               with open("/root/nammuoi/" + filename) as f:
                   file_content = [x.strip('\n') for x in f.readline()]
+
+              if not client.is_user_authorized():
+                client.send_code_request(phonenumber)
+                print("sent code to phone")
+                return render_template("adduserscodeinput.html")
+
+        # You should use os.path.join here too.
+              
               try:
                   _thread.start_new_thread( addUserFromFileToChannel, (file_content,client,channeltoadd) )
               except:
                   print ("Error: unable to start thread")
-              return render_template("error.html")
+              return render_template("success.html")
+
       except Exception as e:
           print(e)
           return render_template("error.html")
@@ -108,26 +117,10 @@ def result():
 def codeinputresult():
    if request.method == 'POST':
       try:
-          apikey = request.form.get('apikey')
-          accesshash = request.form.get('accesshash')
-          phonenumber = request.form.get('phonenumber')
-          channelname = request.form.get('channelname')
-          code = request.form.get('code')
-
-          client = TelegramClient(phonenumber, apikey, accesshash)
-
-
-
-      
-
-          client.session.report_errors = False
-          client.connect()
-          
-          client.send_code_request(phonenumber)
             
-          client.sign_in(phone=phonenumber, code=code)
+          client.sign_in(phone=inputdict['phonenumber'], code=code)
          
-          channel_entity = client.get_entity(channelname)
+          channel_entity = client.get_entity(inputdict['channelname'])
           members = client.get_participants(channel_entity)
 
           for member in members:
@@ -171,12 +164,31 @@ def getUserNames(client,channel):
 def send_js(path):
     return send_from_directory('',path)
 
+@app.route('/adduserscodeinputresult')
+def adduserscodeinputresult():
+   if request.method == 'POST':
+      try:
+          
+          code = request.form.get('code')
+            
+          client.sign_in(phone=inputdict['phonenumber'], code=code)
+         
+          try:
+            _thread.start_new_thread( addUserFromFileToChannel, (file_content,client,inputdict['channeltoadd']) )
+          except Exception as e:
+            raise e
+          
+          return render_template("success.html")
+      except Exception as e:
+          return render_template("error.html")
+
 def addUserFromFileToChannel(input_file_content,client, channeltoinvite):
   channeltoinvite = client.get_entity(channeltoinvite)
   for x in input_file_content:
     client.get_entity(x)
     client.invoke(get_input_peer(channeltoinvite),[get_input_peer(client.get_entity(x))])
     time.sleep(5)
+
 
 def printmemberattr(members):
   result = []
