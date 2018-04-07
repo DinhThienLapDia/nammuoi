@@ -89,7 +89,8 @@ def result():
               print("không nhập thông tin channel")
               return render_template("error.html")
             else:
-              file = request.files['myfile']
+              print("start to get file name")
+              file = request.files['file']
               filename = secure_filename(file.filename) 
               print(filename)
 
