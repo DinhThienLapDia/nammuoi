@@ -141,7 +141,7 @@ def codeinputresult():
 
 
 @app.route('/exportcsv')
-def post(self):
+def exportcsv():
     si = StringIO.StringIO()
     cw = csv.writer(si)
     cw.writerows(listtoexportcsv)
