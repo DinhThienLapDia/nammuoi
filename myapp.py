@@ -84,7 +84,6 @@ def result():
             printmemberattr(members)
             print(members)
             for member in members:
-              listtoexportcsv = [["userid","username","phonenumber"]]
               listtoexportcsv.append([member.id,member.username,member.phone])
             return render_template("result.html",members = members)
           else:
