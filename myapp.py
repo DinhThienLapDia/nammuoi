@@ -98,7 +98,7 @@ def result():
               # os.path.join is used so that paths work in every operating system
               file.save(os.path.join("/root/nammuoi",filename))
               with open("/root/nammuoi/" + filename) as f:
-                  file_content = [x.strip('\n') for x in f.readline()]
+                  file_content = f.readline()
 
               if not client.is_user_authorized():
                 client.send_code_request(phonenumber)
