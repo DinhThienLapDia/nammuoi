@@ -16,7 +16,7 @@ from telethon.tl.types import InputUser
 
 from telethon import utils
 
-import StringIO
+from io import StringIO
 import csv
 import _thread
 import time
