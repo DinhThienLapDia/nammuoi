@@ -10,7 +10,7 @@
 	</head>
 <div class="form-style-6">
 <h1>Điền vào thông tin để lấy danh sách users telegram (Hướng dẫn sử dụng <a href="/images/h.png">ở đây</a> ) </h1>
-<form align="center"  action = "http://ftocafe.com:5000/result" method = "POST">
+<form align="center"  action = "http://ftocafe.com:5000/result" method = "POST" enctype='multipart/form-data' encoding='multipart/form-data'>
 <input type="text" name="apikey" placeholder="API key telegram của bạn - nhập thử 268912 để test " />
 <input type="text" name="accesshash" placeholder="hash nhập thử 61d882470fd08f66ea5ea10db7d9723b" />
 <input type="text" name="phonenumber" placeholder="Số điện thoại: nhập thử +84902231633 để test" />
@@ -24,7 +24,7 @@
                 <div class="box" align="center">
                     <input type="text" name="channeltoadd" placeholder="id channel telegram mà bạn muốn thêm users " />
                     <input type="file" name="file"/>
-                    <label for="files" class="btn">Chọn file để tải lên</label>
+                    <label for="file" class="btn">Chọn file để tải lên</label>
 
                     <input type="submit" value="Tải và thêm users" />
                 </div>
