@@ -195,7 +195,7 @@ def addUserFromFileToChannel(input_file_content,client, channeltoinvite):
     print(x)
     client.get_entity(x)
     print("get username to invite success")
-    client.invoke(get_input_peer(channeltoinvite),[get_input_peer(client.get_entity(x))])
+    client.invoke(InviteToChannelRequest(get_input_peer(channeltoinvite),[get_input_peer(client.get_entity(x))]))
     time.sleep(5)
 
 
