@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from telethon import TelegramClient
 
 from telethon.tl.functions.contacts import ResolveUsernameRequest
