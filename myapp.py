@@ -148,8 +148,12 @@ def exportcsv():
     output = make_response(si.getvalue())
     output.headers["Content-Disposition"] = "attachment; filename=export.csv"
     output.headers["Content-type"] = "text/csv"
-
+    reset_globals
     return output
+
+def reset_globals():
+     global listtoexportcsv
+     listtoexportcsv = [["userid","username","phonenumber"]]
 
 def getUserNames(client,channel):
     print('2:')
